@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <nav class="banner">
+      <img src="./coffee_masters_logo.png" alt="Coffee Masters" width="32" />
+      <h1>Coffee Masters</h1>
+    </nav>
+    <main class="main">
+      <section class="main-card-container">
+        <div class="product-info">
+          <div class="card">
+            <div class="card-title">Items</div>
+            <div class="card-content">
+              <ul class="list">
+                <li class="list-item">
+                  <div class="list-item-product">
+                    <div class="list-item-product-qty">1x</div>
+                    <div class="list-item-product-name">Cappuccino</div>
+                    <div class="list-item-product-items">
+                      <div>Lite foam</div>
+                    </div>
+                  </div>
+                  <div class="list-item-price">$3.35</div>
+                </li>
+                <li class="list-item">
+                  <div class="list-item-product">
+                    <div class="list-item-product-qty">1x</div>
+                    <div class="list-item-product-name">Cappuccino</div>
+                    <div class="list-item-product-items">
+                      <div>Lite milk</div>
+                      <div>Double expresso</div>
+                    </div>
+                  </div>
+                  <div class="list-item-price">$3.85</div>
+                </li>
+                <li class="list-item">
+                  <div class="list-item-product">
+                    <div class="list-item-product-qty">1x</div>
+                    <div class="list-item-product-name">Croissaint</div>
+                    <div class="list-item-product-items">
+                      <div>Butter</div>
+                    </div>
+                  </div>
+                  <div class="list-item-price">$2.45</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="payment-info">
+          <div class="card">
+            <div class="card-title">Name</div>
+            <div class="card-content">
+              <div class="input-area">
+                <label for="name" class="input-label">Name for order</label>
+                <input id="name" class="input" type="text" />
+              </div>
+            </div>
+          </div>
+          <div class="card" style="content: hello">
+            <div class="card-title">Payment</div>
+            <div class="card-content">
+              <div class="input-area">
+                <label for="credit" class="input-label">Card Number</label>
+                <input
+                  id="credit"
+                  class="input-field credit-card"
+                  inputmode="numeric"
+                  pattern="[0-9\s]{13,19}"
+                  placeholder="XXXX XXXX XXXX XXXX"
+                  maxlength="19"
+                />
+              </div>
+              <div class="input-area">
+                <label for="ccv" class="input-label">CCV Number</label>
+                <input id="ccv" class="ccv" type="text" maxlength="3" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="place-order">
+        <ul class="summary">
+          <li class="summary-item">
+            <span>Subtotal:</span>
+            <span>$9.65</span>
+          </li>
+          <li class="summary-item">
+            <span>Tax:</span>
+            <span>$0.82</span>
+          </li>
+          <li class="summary-item">
+            <span>Total:</span>
+            <span>$10.47</span>
+          </li>
+        </ul>
+        <button>Place order</button>
+      </section>
+    </main>
+  </body>
+</html>
