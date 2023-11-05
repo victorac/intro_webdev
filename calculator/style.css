@@ -1,0 +1,121 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.calculator-grid {
+  background-color: black;
+  height: 400px;
+  display: grid;
+  grid-template-areas:
+    "display display display display"
+    "clear clear delete division"
+    ". . . multiplication"
+    ". . . subtraction"
+    ". . . addition"
+    "zeroth zeroth zeroth equals";
+}
+
+.display {
+  background-color: black;
+  grid-area: display;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 250px;
+}
+
+.display .input {
+  background-color: black;
+  border: none;
+  color: white;
+  text-align: end;
+  height: 30px;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+}
+
+.clear {
+  grid-area: clear;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.delete {
+  grid-area: delete;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.operator {
+  background-color: orange;
+  color: white;
+  font-size: x-large;
+}
+
+.division {
+  grid-area: division;
+  border-bottom: 1px solid black;
+}
+
+.multiplication {
+  grid-area: multiplication;
+  border-bottom: 1px solid black;
+}
+
+.subtraction {
+  grid-area: subtraction;
+  border-bottom: 1px solid black;
+}
+
+.addition {
+  grid-area: addition;
+  border-bottom: 1px solid black;
+}
+
+.zeroth {
+  grid-area: zeroth;
+}
+
+.equals {
+  grid-area: equals;
+  background-color: orange;
+  color: white;
+  font-size: x-large;
+}
+
+.number {
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.bottom-edge {
+  border-bottom: none;
+}
+
+button {
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+button:hover {
+  opacity: 0.95;
+}
