@@ -1,8 +1,9 @@
-let accumulatedValue = null;
-let currentValue = null;
+let accumulatedValue = 0;
+let currentValue = 0;
 let currentOperation = null;
 let resetDisplay = true;
 let resetOperation = true;
+let resetAccumulated = true;
 
 const display = document.querySelector(".display .input");
 
@@ -11,11 +12,11 @@ numbers.forEach((el) => {
   el.addEventListener("click", (event) => {
     if (resetDisplay) {
       display.innerHTML = "0";
-      currentValue = null;
+      currentValue = 0;
       resetDisplay = false;
     }
     const enteredNumber = event.target.value;
-    if (currentValue !== null) {
+    if (currentValue !== 0) {
       currentValue = +`${currentValue}${enteredNumber}`;
     } else {
       currentValue = +enteredNumber;
@@ -26,40 +27,46 @@ numbers.forEach((el) => {
 
 const handleClear = () => {
   display.innerHTML = "0";
-  accumulatedValue = null;
-  currentValue = null;
+  accumulatedValue = 0;
+  currentValue = 0;
   currentOperation = null;
   resetDisplay = true;
   resetOperation = true;
+  resetAccumulated = true;
 };
 const clear = document.querySelector(".clear");
 clear.addEventListener("click", handleClear);
 
 const handleDelete = () => {
-  let currentValue = +display.innerHTML;
-  if (Math.abs(currentValue) > 9) {
-    currentValue = +`${currentValue}`.slice(0, -1);
-  } else if (currentValue > 0) {
-    currentValue = null;
-  }
-  if (currentValue !== null) {
-    display.innerHTML = currentValue;
+  accumulatedValue = +display.innerHTML;
+  console.log(accumulatedValue);
+  if (Math.abs(accumulatedValue) > 9) {
+    accumulatedValue = +`${accumulatedValue}`.slice(0, -1);
   } else {
-    display.innerHTML = 0;
+    accumulatedValue = 0;
   }
+  display.innerHTML = accumulatedValue;
+  resetAccumulated = false
 };
 const del = document.querySelector(".delete");
 del.addEventListener("click", handleDelete);
 
 const handleCurrentOperation = () => {
-  if (currentOperation === "division") {
-    accumulatedValue = accumulatedValue / currentValue;
-  } else if (currentOperation === "multiplication") {
-    accumulatedValue = accumulatedValue * currentValue;
-  } else if (currentOperation === "subtraction") {
-    accumulatedValue = accumulatedValue - currentValue;
-  } else if (currentOperation === "addition") {
-    accumulatedValue = accumulatedValue + currentValue;
+  switch (currentOperation) {
+    case "division":
+      if (currentValue !== 0) {
+        accumulatedValue = accumulatedValue / currentValue;
+      }
+      break;
+    case "multiplication":
+      accumulatedValue = accumulatedValue * currentValue;
+      break;
+    case "subtraction":
+      accumulatedValue = accumulatedValue - currentValue;
+      break;
+    case "addition":
+      accumulatedValue = accumulatedValue + currentValue;
+      break;
   }
   display.innerHTML = accumulatedValue;
 };
@@ -71,13 +78,12 @@ operators.forEach((el) => {
       currentOperation = null;
       resetOperation = false;
     }
-    if (accumulatedValue === null) {
+    if (resetAccumulated) {
       accumulatedValue = currentValue;
+      resetAccumulated = false;
     }
-    if (currentValue !== null && accumulatedValue !== null) {
-      handleCurrentOperation();
-      currentValue = null;
-    }
+    handleCurrentOperation();
+    currentValue = 0;
     currentOperation = event.target.value;
     resetDisplay = true;
   });
@@ -85,9 +91,7 @@ operators.forEach((el) => {
 
 const equals = document.querySelector(".equals");
 equals.addEventListener("click", () => {
-  if (currentValue !== null && accumulatedValue !== null) {
-    handleCurrentOperation();
-  }
+  handleCurrentOperation();
   resetDisplay = true;
   resetOperation = true;
 });
