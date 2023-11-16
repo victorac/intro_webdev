@@ -73,3 +73,23 @@ body {
   background-color: green;
 }
 
+.letter-box.invalid-word {
+  animation-duration: 0.5s;
+  animation-name: running-color;
+  animation-timing-function: ease-in;
+}
+
+@keyframes running-color {
+  25% {
+    border-top: 2px solid red;
+  }
+  50% {
+    border-right: 2px solid red;
+  }
+  75% {
+    border-bottom: 2px solid red;
+  }
+  100% {
+    border-left: 2px solid red;
+  }
+}

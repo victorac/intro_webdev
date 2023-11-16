@@ -43,51 +43,44 @@ async function fetchWord() {
   }
 }
 
-async function submitWord(row, wordOfTheDay) {
+function buildWord(children) {
   let word = "";
-  const children = [];
-  for (let i = 0; i < row.children.length; i++) {
-    children.push(row.children[i]);
+  for (let i = 0; i < children.length; i++) {
     word += children[i].innerHTML;
   }
-  word = word.toLowerCase();
+  return word.toLowerCase();
+}
 
-  const isValid = await validateWord(word);
-  if (!isValid) {
-    console.log("invalid word");
-    children.forEach((el) => {
-      el.innerHTML = "";
-    });
-    return isValid;
-  }
-
+function checkWord(word, wordOfTheDay, children) {
   if (word === wordOfTheDay) {
     children.forEach((el) => {
       el.classList.add("done", "right-letter", "right-position");
     });
-    alert("Correct! The word of the day is " + wordOfTheDay);
-  } else {
-    // search for right letters
-    let auxWordOfTheDay = wordOfTheDay;
-    children.forEach((el) => {
-      const char = el.innerHTML.toLowerCase();
-      if (auxWordOfTheDay.includes(char)) {
-        el.classList.add("done", "right-letter");
-      } else {
-        el.classList.add("done");
-      }
-      auxWordOfTheDay.replace(char, "");
-    });
-    // search for right position
-    children.forEach((el, index) => {
-      const char = el.innerHTML.toLowerCase();
-      if (wordOfTheDay.charAt(index) === char) {
-        el.classList.add("right-position");
-      }
-    });
+    return true;
   }
 
-  return isValid;
+  // search for right letters
+  let auxWordOfTheDay = wordOfTheDay;
+  // search for right position
+  children.forEach((el, index) => {
+    const char = el.innerHTML.toLowerCase();
+    if (wordOfTheDay.charAt(index) === char) {
+      el.classList.add("right-letter", "right-position");
+      auxWordOfTheDay = auxWordOfTheDay.replace(char, "");
+    }
+  });
+  console.log(auxWordOfTheDay)
+  children.forEach((el) => {
+    const char = el.innerHTML.toLowerCase();
+    if (auxWordOfTheDay.includes(char)) {
+      el.classList.add("done", "right-letter");
+      auxWordOfTheDay = auxWordOfTheDay.replace(char, "");
+    } else {
+      el.classList.add("done");
+    }
+  });
+
+  return false;
 }
 
 async function init() {
@@ -120,9 +113,27 @@ async function init() {
     currentLetterBox.innerHTML = event.key.toUpperCase();
     letterCount += 1;
     if (letterCount > 4) {
-      const isValid = await submitWord(row, wordOfTheDay);
+      const children = [];
+      for (let i = 0; i < row.children.length; i++) {
+        children.push(row.children[i]);
+      }
+      const word = buildWord(children);
+      const isValid = await validateWord(word);
       if (isValid) {
-        tries += 1;
+        const isMatch = checkWord(word, wordOfTheDay, children);
+        if (isMatch) {
+          alert("Correct! The word of the day is " + wordOfTheDay);
+        } else {
+          tries += 1;
+        }
+      } else {
+        children.forEach((el) => {
+          el.innerHTML = "";
+          el.classList.add("invalid-word");
+          setTimeout(() => {
+            el.classList.remove("invalid-word");
+          }, 1000);
+        });
       }
       letterCount = 0;
       if (tries > 5) {
